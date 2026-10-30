@@ -1,0 +1,610 @@
+/* ==========================================================================
+   CSS Variables & Design Tokens
+   ========================================================================== */
+:root {
+  --font-main: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  /* Transitions */
+  --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-bounce: 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* Radius */
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-xl: 32px;
+}
+
+/* Dark Theme (Default) */
+body[data-theme="dark"] {
+  --bg-gradient: radial-gradient(circle at 50% 20%, #1e2238 0%, #0d0f1a 100%);
+  --calc-bg: rgba(23, 27, 44, 0.85);
+  --calc-border: rgba(255, 255, 255, 0.08);
+  --calc-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.05);
+
+  --display-bg: rgba(13, 16, 28, 0.7);
+  --display-border: rgba(255, 255, 255, 0.04);
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+
+  --btn-num-bg: rgba(255, 255, 255, 0.05);
+  --btn-num-hover: rgba(255, 255, 255, 0.1);
+  --btn-num-active: rgba(255, 255, 255, 0.16);
+  --btn-num-text: #f1f5f9;
+
+  --btn-fn-bg: rgba(239, 68, 68, 0.12);
+  --btn-fn-hover: rgba(239, 68, 68, 0.22);
+  --btn-fn-text: #fca5a5;
+
+  --btn-op-bg: rgba(99, 102, 241, 0.15);
+  --btn-op-hover: rgba(99, 102, 241, 0.28);
+  --btn-op-active: rgba(99, 102, 241, 0.4);
+  --btn-op-text: #a5b4fc;
+  --btn-op-active-glow: 0 0 20px rgba(99, 102, 241, 0.4);
+
+  --btn-equals-bg: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+  --btn-equals-hover: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%);
+  --btn-equals-text: #ffffff;
+  --btn-equals-shadow: 0 10px 24px -6px rgba(99, 102, 241, 0.55);
+
+  --panel-bg: rgba(19, 23, 38, 0.95);
+  --panel-border: rgba(255, 255, 255, 0.08);
+  --item-hover: rgba(255, 255, 255, 0.04);
+  --code-bg: rgba(255, 255, 255, 0.08);
+}
+
+/* Light Theme */
+body[data-theme="light"] {
+  --bg-gradient: radial-gradient(circle at 50% 20%, #eef2ff 0%, #dfe7f6 100%);
+  --calc-bg: rgba(255, 255, 255, 0.9);
+  --calc-border: rgba(0, 0, 0, 0.06);
+  --calc-shadow: 0 25px 60px -15px rgba(50, 60, 90, 0.18), 0 0 0 1px rgba(0, 0, 0, 0.04);
+
+  --display-bg: #f8fafc;
+  --display-border: rgba(0, 0, 0, 0.04);
+  --text-primary: #0f172a;
+  --text-secondary: #64748b;
+  --text-muted: #94a3b8;
+
+  --btn-num-bg: #f1f5f9;
+  --btn-num-hover: #e2e8f0;
+  --btn-num-active: #cbd5e1;
+  --btn-num-text: #1e293b;
+
+  --btn-fn-bg: #fee2e2;
+  --btn-fn-hover: #fecaca;
+  --btn-fn-text: #dc2626;
+
+  --btn-op-bg: #e0e7ff;
+  --btn-op-hover: #c7d2fe;
+  --btn-op-active: #a5b4fc;
+  --btn-op-text: #4338ca;
+  --btn-op-active-glow: 0 0 15px rgba(79, 70, 229, 0.25);
+
+  --btn-equals-bg: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%);
+  --btn-equals-hover: linear-gradient(135deg, #4338ca 0%, #3730a3 100%);
+  --btn-equals-text: #ffffff;
+  --btn-equals-shadow: 0 10px 24px -6px rgba(79, 70, 229, 0.35);
+
+  --panel-bg: rgba(255, 255, 255, 0.96);
+  --panel-border: rgba(0, 0, 0, 0.08);
+  --item-hover: rgba(0, 0, 0, 0.03);
+  --code-bg: rgba(0, 0, 0, 0.06);
+}
+
+/* ==========================================================================
+   Base & Reset
+   ========================================================================== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+body {
+  font-family: var(--font-main);
+  background: var(--bg-gradient);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-primary);
+  padding: 1.5rem;
+  overflow-x: hidden;
+  transition: background 0.4s ease;
+}
+
+/* ==========================================================================
+   App Container & Header
+   ========================================================================== */
+.calculator-app {
+  width: 100%;
+  max-width: 440px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.calc-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.25rem 0.5rem;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 700;
+  font-size: 1.15rem;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, #a5b4fc 0%, #ffffff 60%, #818cf8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+body[data-theme="light"] .brand {
+  background: linear-gradient(135deg, #4338ca 0%, #1e1b4b 60%, #6366f1 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.brand-icon {
+  font-size: 1.25rem;
+  -webkit-text-fill-color: initial;
+  filter: drop-shadow(0 0 8px rgba(250, 204, 21, 0.6));
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.icon-btn {
+  background: var(--btn-num-bg);
+  border: 1px solid var(--calc-border);
+  color: var(--text-secondary);
+  width: 38px;
+  height: 38px;
+  border-radius: var(--radius-sm);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  font-size: 1rem;
+}
+
+.icon-btn:hover {
+  background: var(--btn-num-hover);
+  color: var(--text-primary);
+  transform: translateY(-1px);
+}
+
+.icon-btn:active {
+  transform: translateY(1px);
+}
+
+.icon-btn.active {
+  background: var(--btn-op-bg);
+  color: var(--btn-op-text);
+  border-color: currentColor;
+}
+
+.icon-btn.small {
+  width: 28px;
+  height: 28px;
+  font-size: 0.85rem;
+}
+
+/* ==========================================================================
+   Calculator Wrapper & Frame
+   ========================================================================== */
+.calc-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.calc-container {
+  background: var(--calc-bg);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--calc-border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--calc-shadow);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  transition: transform var(--transition-normal);
+}
+
+/* ==========================================================================
+   Display Screen (Single Line Display)
+   ========================================================================== */
+.calc-display {
+  background: var(--display-bg);
+  border: 1px solid var(--display-border);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem 1.25rem;
+  min-height: 94px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+  transition: border-color var(--transition-fast), background var(--transition-fast);
+}
+
+.calc-display:hover {
+  border-color: rgba(99, 102, 241, 0.3);
+}
+
+.single-line-display {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  white-space: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.single-line-display::-webkit-scrollbar {
+  display: none;
+}
+
+.calc-line {
+  font-family: var(--font-main);
+  font-weight: 600;
+  font-size: 2.35rem;
+  line-height: 1.2;
+  color: var(--text-primary);
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.35rem;
+  white-space: nowrap;
+  letter-spacing: -0.02em;
+  transition: font-size 0.15s ease;
+}
+
+.calc-line .op-symbol {
+  color: var(--btn-op-text);
+  font-weight: 600;
+  padding: 0 0.15rem;
+}
+
+.calc-line .eq-symbol {
+  color: var(--btn-op-text);
+  font-weight: 600;
+  padding: 0 0.2rem;
+}
+
+.calc-line .expr-subdued {
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.calc-line .result-val {
+  color: var(--text-primary);
+  font-weight: 700;
+}
+
+.calc-line .error-val {
+  color: #ef4444;
+  font-size: 1.45rem;
+  font-weight: 600;
+}
+
+/* Dynamically shrink long expressions to stay readable */
+.calc-line.font-md {
+  font-size: 1.9rem;
+}
+.calc-line.font-sm {
+  font-size: 1.55rem;
+}
+.calc-line.font-xs {
+  font-size: 1.25rem;
+}
+
+.copy-toast {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-6px);
+  background: #10b981;
+  color: #ffffff;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 20px;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.25s ease;
+}
+
+.copy-toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ==========================================================================
+   Keypad Buttons
+   ========================================================================== */
+.calc-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.75rem;
+}
+
+.calc-btn {
+  border: none;
+  outline: none;
+  font-family: var(--font-main);
+  font-size: 1.35rem;
+  font-weight: 500;
+  height: 62px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  position: relative;
+  overflow: hidden;
+}
+
+.calc-btn:focus-visible {
+  outline: 2px solid #6366f1;
+  outline-offset: 2px;
+}
+
+/* Numbers */
+.calc-btn.num {
+  background: var(--btn-num-bg);
+  color: var(--btn-num-text);
+}
+
+.calc-btn.num:hover {
+  background: var(--btn-num-hover);
+  transform: translateY(-2px);
+}
+
+.calc-btn.num:active,
+.calc-btn.num.key-active {
+  background: var(--btn-num-active);
+  transform: translateY(1px);
+}
+
+/* Function Buttons (AC, Backspace, % etc.) */
+.calc-btn.fn {
+  background: var(--btn-fn-bg);
+  color: var(--btn-fn-text);
+  font-weight: 600;
+}
+
+.calc-btn.fn:hover {
+  background: var(--btn-fn-hover);
+  transform: translateY(-2px);
+}
+
+.calc-btn.fn:active,
+.calc-btn.fn.key-active {
+  transform: translateY(1px);
+  filter: brightness(0.9);
+}
+
+/* Operator Buttons (+, -, ×, ÷) */
+.calc-btn.op {
+  background: var(--btn-op-bg);
+  color: var(--btn-op-text);
+  font-size: 1.55rem;
+  font-weight: 600;
+}
+
+.calc-btn.op:hover {
+  background: var(--btn-op-hover);
+  transform: translateY(-2px);
+}
+
+.calc-btn.op:active,
+.calc-btn.op.key-active,
+.calc-btn.op.operator-active {
+  background: var(--btn-op-active);
+  box-shadow: var(--btn-op-active-glow);
+  transform: scale(0.96);
+}
+
+/* Equals Button */
+.calc-btn.equals {
+  background: var(--btn-equals-bg);
+  color: var(--btn-equals-text);
+  font-size: 1.7rem;
+  font-weight: 600;
+  box-shadow: var(--btn-equals-shadow);
+}
+
+.calc-btn.equals:hover {
+  background: var(--btn-equals-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px -6px rgba(99, 102, 241, 0.65);
+}
+
+.calc-btn.equals:active,
+.calc-btn.equals.key-active {
+  transform: translateY(1px);
+  box-shadow: 0 4px 12px -2px rgba(99, 102, 241, 0.4);
+}
+
+/* Keyboard hint footer */
+.calc-hints {
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  padding-top: 0.25rem;
+}
+
+.calc-hints code {
+  font-family: var(--font-mono);
+  background: var(--code-bg);
+  padding: 2px 5px;
+  border-radius: 4px;
+  margin: 0 2px;
+}
+
+/* ==========================================================================
+   History Drawer
+   ========================================================================== */
+.history-panel {
+  position: absolute;
+  inset: 0;
+  background: var(--panel-bg);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius-xl);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.95);
+  transition: all var(--transition-normal);
+  z-index: 10;
+}
+
+.history-panel.open {
+  opacity: 1;
+  pointer-events: auto;
+  transform: scale(1);
+}
+
+.history-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--calc-border);
+  padding-bottom: 0.75rem;
+}
+
+.history-header h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.history-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.text-btn {
+  background: none;
+  border: none;
+  font-family: var(--font-main);
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: all var(--transition-fast);
+}
+
+.text-btn.danger {
+  color: #ef4444;
+}
+
+.text-btn.danger:hover {
+  background: rgba(239, 68, 68, 0.12);
+}
+
+.history-list {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding-right: 4px;
+}
+
+/* Scrollbar */
+.history-list::-webkit-scrollbar {
+  width: 5px;
+}
+.history-list::-webkit-scrollbar-thumb {
+  background: var(--calc-border);
+  border-radius: 10px;
+}
+
+.empty-history {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.history-item {
+  background: var(--display-bg);
+  border: 1px solid var(--display-border);
+  border-radius: var(--radius-sm);
+  padding: 0.75rem 1rem;
+  text-align: right;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.history-item:hover {
+  background: var(--item-hover);
+  border-color: rgba(99, 102, 241, 0.3);
+  transform: translateX(-2px);
+}
+
+.history-item .hist-expr {
+  font-family: var(--font-main);
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+
+.history-item .hist-res {
+  font-weight: 600;
+  font-size: 1.25rem;
+  color: var(--text-primary);
+}
+
+/* ==========================================================================
+   Responsive Breakpoints
+   ========================================================================== */
+@media (max-width: 420px) {
+  body {
+    padding: 0.75rem;
+  }
+
+  .calc-container {
+    padding: 1.1rem;
+    gap: 1rem;
+  }
+
+  .calc-btn {
+    height: 56px;
+    font-size: 1.25rem;
+  }
+
+  .calc-line {
+    font-size: 1.95rem;
+  }
+}
